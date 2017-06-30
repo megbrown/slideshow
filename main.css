@@ -1,0 +1,29 @@
+#imageDisplay {
+	position: relative;
+	border: 2px solid #000;
+	width: 90%;
+	height: 700px;
+	margin: 2em auto;
+}
+
+.image {
+	position: absolute;
+	top: 0;
+	left: 0;
+	text-align: center;
+	margin-top: 25px;
+	background-color: #fff;
+}
+
+img{
+	width: 500px;
+	height: 500px;
+}
+
+.hidden {
+	display: none;
+}
+
+button {
+	clear: both;
+}

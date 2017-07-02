@@ -10,7 +10,7 @@ let imagesArr = [
 	{
 		img: "images/image2.png",
 		name: "Grace Hopper",
-		caption: "Grace Hopper was an American computer scientist and US Navy Rear Admiral. She's often referred to as the Admiral of the Cybersea or 'Amazing Grace' for her many computing innovations. After earning her PhD in mathematics from Yale in 1934, she enlisted in the Navy and graduated first in her class and began working on the Mark I computer. In 1949, she recommended that a new programming language be developed using entirely English words, but was told very quickly that she couldn't do this because computers didn't understand English. Her idea wasn't accepted for 3 years. But by 1952, she had an operational compiler, A-0. That shut down the naysayers. A compiler is a computer program that converts code written in a language that programmers can understand to 0s and 1s for the computer to understand. She is also known for popularizing the term 'computer bug' after she found an actual moth trapped in the Mark II Aiken Relay Calculator and deemed the machine 'debugged' after retrieving the insect. Grace also developed the implementation of standards for testing computer systems and components for early programming languages like COBOL and FORTRAN.",
+		caption: "Grace Hopper was an American computer scientist and US Navy Rear Admiral. After earning her PhD in mathematics from Yale in 1934, she enlisted in the Navy and began working on the Mark I computer. In 1949, she recommended that a new programming language be developed using entirely English words, but was told very quickly that she couldn't do this because computers didn't understand English. Her idea wasn't accepted for 3 years. But by 1952, she had an operational compiler, A-0. She is also known for popularizing the term 'computer bug' after she found an actual moth trapped in the Mark II Aiken Relay Calculator and deemed the machine 'debugged' after retrieving the insect. Grace also developed the implementation of standards for testing computer systems and components for early programming languages like COBOL and FORTRAN.",
 		source: "https://www.beyondcurie.com/grace-hopper/"
 	},
 	{
@@ -47,10 +47,16 @@ function makeSlides() {
 	for (let i=0; i<imagesArr.length; i++) {
 		$("#imageDisplay").append(
 		`<div class="slide">
-		<h1>${imagesArr[i].name}</h1>
-		<img src="${imagesArr[i].img}">
-		<p>${imagesArr[i].caption}</p>
-		<a href="${imagesArr[i].source}" target="_blank">Learn More Here</a>
+			<h1>${imagesArr[i].name}</h1>
+			<div class="row">
+				<div class="col-sm-4">
+					<img src="${imagesArr[i].img}">
+				</div>
+				<div class="col-sm-8">
+					<p>${imagesArr[i].caption}</p>
+					<a href="${imagesArr[i].source}" target="_blank">Learn More Here</a>
+				</div>
+			</div>
 		</div>`
 		)
 	}
@@ -61,12 +67,56 @@ function orderSlides() {
 	let i;
 	let j;
 	let slides = $(".slide");
-	let slidesLen = slides.length - 1;
 	for (i = 0, j = 6; i < slides.length; i += 1, j -= 1) {
    $(slides[i]).css("z-index", j);
 	}
+	$(slides).addClass("hidden");
+	showSlides(slides);
 }
 
-function showSlides() {
+function showSlides(slides) {
+	let counter = 0;
+	if (counter === 0) {
+		slides.eq(counter).removeClass("hidden");
+	}
+	autoRotateSlides(counter, slides);
+	$("#next").click(function() {
+		if (counter === slides.length - 1) {
+			counter = 0;
+			slides.eq(counter).removeClass("hidden");
+		} else {
+			slides.eq(counter).addClass("hidden");
+			slides.eq(counter + 1).removeClass("hidden");
+			counter += 1;
+		}
+	});
+	$("#prev").click(function() {
+		if (counter === 0) {
+			slides.eq(counter).addClass("hidden");
+			slides.eq(slides.length - 1).removeClass("hidden");
+			counter = slides.length - 1;
+		} else {
+			slides.eq(counter).addClass("hidden");
+			slides.eq(counter - 1).removeClass("hidden");
+			counter -= 1;
+		}
+	});
+}
 
+function autoRotateSlides(counter, slides) {
+	setInterval(function() {
+		if (counter === 0) {
+			slides.eq(counter).addClass("hidden");
+			slides.eq(counter + 1).removeClass("hidden");
+			counter += 1;
+		} else if (counter === slides.length - 1) {
+			slides.eq(counter).addClass("hidden");
+			counter = 0;
+			slides.eq(counter).removeClass("hidden");
+		} else {
+			slides.eq(counter).addClass("hidden");
+			slides.eq(counter + 1).removeClass("hidden");
+			counter += 1;
+		}
+	}, 3000);
 }

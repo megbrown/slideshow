@@ -1,60 +1,28 @@
 "use strict";
 
-let imagesArr = [
-	{
-		img: "images/image1.png",
-		name: "Ada Lovelace",
-		caption: "Ada Lovelace was a countess, English mathematician and writer, most recognized for her work on Charles Babbage's early mechanical general-purpose computer, the Analytical Engine. She is regarded as the world's first computer programmer for her publication in 1843, suggesting the data input that would program the Analytic Machine to calculate Bernoulli numbers, now considered the first computer program. Babbage was so impressed, he dubbed her the 'Enchantress of Numbers'.",
-		source: "https://www.beyondcurie.com/ada-lovelace/"
-	},
-	{
-		img: "images/image2.png",
-		name: "Grace Hopper",
-		caption: "Grace Hopper was an American computer scientist and US Navy Rear Admiral. After earning her PhD in mathematics from Yale in 1934, she enlisted in the Navy and began working on the Mark I computer. In 1949, she recommended that a new programming language be developed using entirely English words, but was told very quickly that she couldn't do this because computers didn't understand English. Her idea wasn't accepted for 3 years. But by 1952, she had an operational compiler, A-0. She is also known for popularizing the term 'computer bug' after she found an actual moth trapped in the Mark II Aiken Relay Calculator and deemed the machine 'debugged' after retrieving the insect. Grace also developed the implementation of standards for testing computer systems and components for early programming languages like COBOL and FORTRAN.",
-		source: "https://www.beyondcurie.com/grace-hopper/"
-	},
-	{
-		img: "images/image3.png",
-		name: "Katherine Johnson",
-		caption: "In 1962, as NASA prepared for the orbital mission of John Glenn, Katherine was personally called upon by Glenn to ensure his safety by recalculating and rechecking flight trajectories that had already been programmed into the computer. Glenn’s flight was a success, and turned the tide of the Space Race. Her calculations were also critical to the 1969 Apollo 11 flight to the moon. For her incredible contributions to space exploration in her 30 years at NASA, she was awarded the Presidential Medal of Freedom by President Obama, America's highest civilian honor.",
-		source: "https://www.beyondcurie.com/katherine-johnson/"
-	},
-	{
-		img: "images/image4.png",
-		name: "Mae Jemison",
-		caption: "Mae Jemison was not only the first black woman to travel in space but also an accomplished engineer and physician. On September 12, 1992, she flew into space on the Shuttle Endeavour for mission STS-47. As mission specialist, she was responsible for conducting scientific experiments exploring weightlessness, motion sickness and bone cells while on the shuttle. Despite NASA's rigid protocol, she would always begin each shift with a salute that only a Trekkie could appreciate, 'hailing frequencies open' she would repeat throughout the 8-day mission. Because of her love of dance, she took an Alvin Ailey poster with her on the mission saying that ‘science and dance are both expressions of the boundless creativity that people have to share with one another’. She left NASA in 1993 to start the Jemison Group that researches, markets and develops science and technology for daily life.",
-		source: "https://www.beyondcurie.com/mae-jemison/"
-	},
-	{
-		img: "images/image5.png",
-		name: "YouYou Tu",
-		caption: "YouYou Tu is a Chinese pharmacologist who won the Nobel Prize in 2015 for her discovery of artemisinin, a compound used to treat malaria, isolated from the sweet wormwood plant often found in Chinese Traditional Medicine. When others wanted to abandon the research, she found a solution in a millennium-old recipe. She also first tested the compound on herself! She has saved millions of lives with her groundbreaking work and is often referred to as the professor of 3 No’s: no post-graduate degree, no research abroad experience and no affiliation with any Chinese national academies.",
-		source: "https://www.beyondcurie.com/youyou-tu/"
-	},
-	{
-		img: "images/image6.png",
-		name: "Rita Levi-Montalcini",
-		caption: "Rita Levi-Montalcini was an Italian Nobel Laureate honored for her work in neurobiology. She won the Nobel Prize in 1986 for the discovery of nerve growth factor. Her academic career was cut short as a result of Mussolini's 1938 ban barring Jews from academic and professional careers. So she set up a laboratory in her bedroom and studied the growth of nerve fibers in chicken embryos, which laid the groundwork for her later research. In 1946 she was granted a fellowship at Washington University in St. Louis. She replicated her previous work done in her makeshift bedroom lab and was offered a research position at the university which she held for 30 years. There, in 1952 she did her most important work, isolating the nerve growth factor from observations of certain cancerous tissues that cause extremely rapid growth of nerve cells. She became the first Nobel Laureate ever to reach the age of 100.",
-		source: "https://www.beyondcurie.com/rita-levimontalcini/"
-	},
-];
+let imagesArr = [];
 
 $(document).ready( function(){
-	makeSlides();
+	$.ajax({
+		url: "images.json",
+	}).done( function(slides){
+		imagesArr.push(slides);
+		makeSlides(slides);
+	});
 })
 
 function makeSlides() {
-	for (let i=0; i<imagesArr.length; i++) {
+	for (let i=0; i<imagesArr[0].slides.length; i++) {
 		$("#imageDisplay").append(
 		`<div class="slide">
-			<h1>${imagesArr[i].name}</h1>
+			<h1>${imagesArr[0].slides[i].name}</h1>
 			<div class="row">
 				<div class="col-sm-4">
-					<img src="${imagesArr[i].img}">
+					<img src="${imagesArr[0].slides[i].img}">
 				</div>
 				<div class="col-sm-8">
-					<p>${imagesArr[i].caption}</p>
-					<a href="${imagesArr[i].source}" target="_blank">Learn More Here</a>
+					<p>${imagesArr[0].slides[i].caption}</p>
+					<a href="${imagesArr[0].slides[i].source}" target="_blank">Learn More Here</a>
 				</div>
 			</div>
 		</div>`

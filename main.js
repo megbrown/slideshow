@@ -47,7 +47,7 @@ function showSlides(slides) {
 	if (counter === 0) {
 		slides.eq(counter).fadeIn();
 	}
-	autoRotateSlides(counter, slides);
+	// autoRotateSlides(counter, slides);
 	$("#next").click(function() {
 		if (counter === slides.length - 1) {
 			counter = 0;
@@ -71,20 +71,20 @@ function showSlides(slides) {
 	});
 }
 
-function autoRotateSlides(counter, slides) {
-	setInterval(function() {
-		if (counter === 0) {
-			slides.eq(counter).fadeOut();
-			slides.eq(counter + 1).fadeIn();
-			counter += 1;
-		} else if (counter === slides.length - 1) {
-			slides.eq(counter).fadeOut();
-			counter = 0;
-			slides.eq(counter).fadeIn();
-		} else {
-			slides.eq(counter).fadeOut();
-			slides.eq(counter + 1).fadeIn();
-			counter += 1;
-		}
-	}, 3000);
-}
+// function autoRotateSlides(counter, slides) {
+// 	setInterval(function() {
+// 		if (counter === 0) {
+// 			slides.eq(counter).fadeOut();
+// 			slides.eq(counter + 1).fadeIn();
+// 			counter += 1;
+// 		} else if (counter === slides.length - 1) {
+// 			slides.eq(counter).fadeOut();
+// 			counter = 0;
+// 			slides.eq(counter).fadeIn();
+// 		} else {
+// 			slides.eq(counter).fadeOut();
+// 			slides.eq(counter + 1).fadeIn();
+// 			counter += 1;
+// 		}
+// 	}, 3000);
+// }

@@ -47,7 +47,9 @@ function showSlides(slides) {
 	if (currentSlide === 0) {
 		slides.eq(currentSlide).show();
 	}
-	// autoRotateSlides(currentSlide, slides);
+	$("#autoRotate").click( function() {
+	autoRotateSlides(currentSlide, slides);
+});
 	$("#next").click(function() {
 		if (currentSlide === slides.length - 1) {
 			currentSlide = 0;
@@ -70,21 +72,20 @@ function showSlides(slides) {
 		}
 	});
 }
-
-// function autoRotateSlides(currentSlide, slides) {
-// 	setInterval(function() {
-// 		if (currentSlide === 0) {
-// 			slides.eq(currentSlide).hide();
-// 			slides.eq(currentSlide + 1).show();
-// 			currentSlide += 1;
-// 		} else if (currentSlide === slides.length - 1) {
-// 			slides.eq(currentSlide).hide();
-// 			currentSlide = 0;
-// 			slides.eq(currentSlide).show();
-// 		} else {
-// 			slides.eq(currentSlide).hide();
-// 			slides.eq(currentSlide + 1).show();
-// 			currentSlide += 1;
-// 		}
-// 	}, 3000);
-// }
+function autoRotateSlides(currentSlide, slides) {
+	setInterval(function() {
+		if (currentSlide === 0) {
+			slides.eq(currentSlide).hide();
+			slides.eq(currentSlide + 1).show();
+			currentSlide += 1;
+		} else if (currentSlide === slides.length - 1) {
+			slides.eq(currentSlide).hide();
+			currentSlide = 0;
+			slides.eq(currentSlide).show();
+		} else {
+			slides.eq(currentSlide).hide();
+			slides.eq(currentSlide + 1).show();
+			currentSlide += 1;
+		}
+	}, 2000);
+}

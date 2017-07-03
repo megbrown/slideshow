@@ -38,52 +38,52 @@ function orderSlides() {
 	for (i = 0, j = 6; i < slides.length; i += 1, j -= 1) {
    $(slides[i]).css("z-index", j);
 	}
+	$(slides).hide();
 	showSlides(slides);
 }
 
 function showSlides(slides) {
 	let currentSlide = 0;
 	if (currentSlide === 0) {
-		slides.eq(currentSlide).fadeIn("slow");
+		slides.eq(currentSlide).show();
 	}
 	// autoRotateSlides(currentSlide, slides);
 	$("#next").click(function() {
 		if (currentSlide === slides.length - 1) {
 			currentSlide = 0;
-			slides.eq(currentSlide).fadeIn("slow");
+			slides.eq(currentSlide).show();
 		} else {
-			slides.eq(currentSlide).fadeOut("slow");
-			slides.eq(currentSlide + 1).fadeIn("slow");
+			slides.eq(currentSlide).hide();
+			slides.eq(currentSlide + 1).show();
 			currentSlide += 1;
 		}
 	});
 	$("#prev").click(function() {
 		if (currentSlide === 0) {
-			slides.eq(currentSlide).fadeOut("slow");
-			slides.eq(slides.length - 1).fadeIn("slow");
+			slides.eq(currentSlide).hide();
+			slides.eq(slides.length - 1).show();
 			currentSlide = slides.length - 1;
 		} else {
-			slides.eq(currentSlide).fadeOut("slow");
-			slides.eq(currentSlide - 1).fadeIn("slow");
+			slides.eq(currentSlide).hide();
+			slides.eq(currentSlide - 1).show();
 			currentSlide -= 1;
 		}
 	});
 }
 
-
 // function autoRotateSlides(currentSlide, slides) {
 // 	setInterval(function() {
 // 		if (currentSlide === 0) {
-// 			slides.eq(currentSlide).fadeOut("slow");
-// 			slides.eq(currentSlide + 1).fadeIn("slow");
+// 			slides.eq(currentSlide).hide();
+// 			slides.eq(currentSlide + 1).show();
 // 			currentSlide += 1;
 // 		} else if (currentSlide === slides.length - 1) {
-// 			slides.eq(currentSlide).fadeOut("slow");
+// 			slides.eq(currentSlide).hide();
 // 			currentSlide = 0;
-// 			slides.eq(currentSlide).fadeIn("slow");
+// 			slides.eq(currentSlide).show();
 // 		} else {
-// 			slides.eq(currentSlide).fadeOut("slow");
-// 			slides.eq(currentSlide + 1).fadeIn("slow");
+// 			slides.eq(currentSlide).hide();
+// 			slides.eq(currentSlide + 1).show();
 // 			currentSlide += 1;
 // 		}
 // 	}, 3000);

@@ -1,6 +1,7 @@
 "use strict";
 
 let imagesArr = [];
+let intervalId = null;
 
 $(document).ready( function(){
 	$.ajax({
@@ -34,69 +35,71 @@ function makeSlides() {
 function orderSlides() {
 	let i;
 	let j;
+	let currentSlide = 0;
 	let slides = $(".slide");
 	for (i = 0, j = 6; i < slides.length; i += 1, j -= 1) {
    $(slides[i]).css("z-index", j);
 	}
 	$(slides).hide();
-	showSlides(slides);
+	showSlides(slides, currentSlide);
+	chooseAutoRotate(slides, currentSlide);
 }
 
-function showSlides(slides) {
-	let currentSlide = 0;
+function chooseAutoRotate(slides, currentSlide) {
+ 	$("#autoRotate").click( function() {
+		if ($("#autoRotate").is(":checked")) {
+			autoRotateSlides(currentSlide, slides);
+		} else if ($("#autoRotate").prop("checked") === false) {
+			clearInterval(intervalId);
+		}
+	})
+}
+
+function showSlides(slides, currentSlide) {
 	if (currentSlide === 0) {
 		slides.eq(currentSlide).show();
 	}
-
-
-	$("#autoRotate").click( function() {
-		if ($("#autoRotate").is(":checked")) {
-			console.log("value", $("#autoRotate").prop("checked"))
-			autoRotateSlides(currentSlide, slides);
-		} else {
-			slides.eq(currentSlide).show();
-				console.log("value", $("#autoRotate").prop("checked"))
-		}
-	})
-
-
-
 	$("#next").click(function() {
 		if (currentSlide === slides.length - 1) {
 			currentSlide = 0;
 			slides.eq(currentSlide).show();
 		} else {
-			slides.eq(currentSlide).hide();
-			slides.eq(currentSlide + 1).show();
+			advance(slides, currentSlide);
 			currentSlide += 1;
 		}
 	});
 	$("#prev").click(function() {
 		if (currentSlide === 0) {
-			slides.eq(currentSlide).hide();
-			slides.eq(slides.length - 1).show();
+			retreat(slides, currentSlide);
 			currentSlide = slides.length - 1;
 		} else {
-			slides.eq(currentSlide).hide();
-			slides.eq(currentSlide - 1).show();
+			retreat(slides, currentSlide);
 			currentSlide -= 1;
 		}
 	});
 }
+
 function autoRotateSlides(currentSlide, slides) {
-	setInterval(function() {
+	intervalId = setInterval(function() {
 		if (currentSlide === 0) {
-			slides.eq(currentSlide).hide();
-			slides.eq(currentSlide + 1).show();
+			advance(slides, currentSlide);
 			currentSlide += 1;
 		} else if (currentSlide === slides.length - 1) {
 			slides.eq(currentSlide).hide();
 			currentSlide = 0;
 			slides.eq(currentSlide).show();
 		} else {
-			slides.eq(currentSlide).hide();
-			slides.eq(currentSlide + 1).show();
+			advance(slides, currentSlide);
 			currentSlide += 1;
 		}
 	}, 2000);
+}
+
+function advance(slides, currentSlide) {
+	slides.eq(currentSlide).hide();
+	slides.eq(currentSlide + 1).show();
+}
+function retreat(slides, currentSlide) {
+	slides.eq(currentSlide).hide();
+	slides.eq(currentSlide - 1).show();
 }

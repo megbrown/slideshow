@@ -47,9 +47,20 @@ function showSlides(slides) {
 	if (currentSlide === 0) {
 		slides.eq(currentSlide).show();
 	}
+
+
 	$("#autoRotate").click( function() {
-	autoRotateSlides(currentSlide, slides);
-});
+		if ($("#autoRotate").is(":checked")) {
+			console.log("value", $("#autoRotate").prop("checked"))
+			autoRotateSlides(currentSlide, slides);
+		} else {
+			slides.eq(currentSlide).show();
+				console.log("value", $("#autoRotate").prop("checked"))
+		}
+	})
+
+
+
 	$("#next").click(function() {
 		if (currentSlide === slides.length - 1) {
 			currentSlide = 0;

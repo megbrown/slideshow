@@ -35,71 +35,73 @@ function makeSlides() {
 function orderSlides() {
 	let i;
 	let j;
-	let currentSlide = 0;
+	let counter = 0;
 	let slides = $(".slide");
 	for (i = 0, j = 6; i < slides.length; i += 1, j -= 1) {
    $(slides[i]).css("z-index", j);
 	}
 	$(slides).hide();
-	showSlides(slides, currentSlide);
-	chooseAutoRotate(slides, currentSlide);
+	showSlides(slides, counter);
+	chooseAutoRotate(slides, counter);
 }
 
-function chooseAutoRotate(slides, currentSlide) {
+function chooseAutoRotate(slides, counter) {
  	$("#autoRotate").click( function() {
 		if ($("#autoRotate").is(":checked")) {
-			autoRotateSlides(currentSlide, slides);
+			autoRotateSlides(counter, slides);
 		} else if ($("#autoRotate").prop("checked") === false) {
 			clearInterval(intervalId);
+			// counter = 0;
+			// slides.eq(counter).fadeIn();
 		}
 	})
 }
 
-function showSlides(slides, currentSlide) {
-	if (currentSlide === 0) {
-		slides.eq(currentSlide).show();
+function showSlides(slides, counter) {
+	if (counter === 0) {
+		slides.eq(counter).fadeIn();
 	}
 	$("#next").click(function() {
-		if (currentSlide === slides.length - 1) {
-			currentSlide = 0;
-			slides.eq(currentSlide).show();
+		if (counter === slides.length - 1) {
+			counter = 0;
+			slides.eq(counter).fadeIn();
 		} else {
-			advance(slides, currentSlide);
-			currentSlide += 1;
+			advance(slides, counter);
+			counter += 1;
 		}
 	});
 	$("#prev").click(function() {
-		if (currentSlide === 0) {
-			retreat(slides, currentSlide);
-			currentSlide = slides.length - 1;
+		if (counter === 0) {
+			retreat(slides, counter);
+			counter = slides.length - 1;
 		} else {
-			retreat(slides, currentSlide);
-			currentSlide -= 1;
+			retreat(slides, counter);
+			counter -= 1;
 		}
 	});
 }
 
-function autoRotateSlides(currentSlide, slides) {
+function autoRotateSlides(counter, slides) {
 	intervalId = setInterval(function() {
-		if (currentSlide === 0) {
-			advance(slides, currentSlide);
-			currentSlide += 1;
-		} else if (currentSlide === slides.length - 1) {
-			slides.eq(currentSlide).hide();
-			currentSlide = 0;
-			slides.eq(currentSlide).show();
+		if (counter === 0) {
+			advance(slides, counter);
+			counter += 1;
+		} else if (counter === slides.length - 1) {
+			slides.eq(counter).fadeOut();
+			counter = 0;
+			slides.eq(counter).fadeIn();
 		} else {
-			advance(slides, currentSlide);
-			currentSlide += 1;
+			advance(slides, counter);
+			counter += 1;
 		}
 	}, 2000);
 }
 
-function advance(slides, currentSlide) {
-	slides.eq(currentSlide).hide();
-	slides.eq(currentSlide + 1).show();
+function advance(slides, counter) {
+	slides.eq(counter).fadeOut();
+	slides.eq(counter + 1).fadeIn();
 }
-function retreat(slides, currentSlide) {
-	slides.eq(currentSlide).hide();
-	slides.eq(currentSlide - 1).show();
+function retreat(slides, counter) {
+	slides.eq(counter).fadeOut();
+	slides.eq(counter - 1).fadeIn();
 }
